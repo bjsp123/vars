@@ -1,6 +1,12 @@
 [build]
 functions="./functions"
-
-[dev]
 publish="static/"
+
+
+[[redirects]]
+from="/*"
+to= "https:/vars.netlify.app/.netlify/functions/hello"
+status=200
+
+
 

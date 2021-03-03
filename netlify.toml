@@ -5,7 +5,7 @@ publish="static/"
 
 [[redirects]]
 from="/*"
-to= "https:/vars.netlify.app/.netlify/functions/hello"
+to= "https://vars.netlify.app/.netlify/functions/hello"
 status=200
 
 

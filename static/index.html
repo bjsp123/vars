@@ -1,1 +1,145 @@
-This is a dummy index.
+<html>
+<head>
+    <style>
+        body {
+            background-color: black;
+            color:lightgray;
+            font-family: "Lucida Sans Typewriter", "Lucida Typewriter","Courier New", Courier, monospace;
+            margin-left: 15%;
+            margin-right: 15%;
+        }
+
+        h1 {
+            text-align:center;
+            margin-top: 100px;
+            font-weight: bold;
+            font-size: larger;
+        }
+
+        h2 {
+            margin-top: 50px;
+            font-weight: bold;
+            font-size: large;
+        }
+
+        .separator {
+            text-align:center;
+            margin-top: 50px;
+            margin-bottom: 50px;
+        }
+
+        .code {
+            color: lightgreen;
+        }
+
+        .var {
+            color: lightyellow;
+        }
+
+        .comment {
+            color: gray;
+            font-style: italic;
+        }
+
+        .faq {
+            font-style: italic;
+            color:lightyellow;
+            margin-bottom: 25px;
+        }
+
+        .faa {
+
+            margin-bottom: 25px;
+        }
+
+    </style>
+</head>
+<body>
+
+<h1>Welcome to Storethat.online </h1>
+
+<div class="separator">Ultra-lightweight no-code data storage.<br/>------------------------------------<br/></div>
+storethat.online is a key-value store that can be used with no tools, preparation or coding except a simple HTTP request -- in fact it could be used
+entirely from the address bar of a browser.
+<h2>Usage</h2>
+
+<p>
+    Store a value:
+    <span class="code">https://storethat.online/set/<span class="var">{key}</span>/<span class="var">{value}</span>
+        <span class="comment">//sets a value in the store, and returns a confirmation message</span></span>
+</p><p>
+    Retrieve a value:
+    <span class="code">https://storethat.online/get/<span class="var">{key}</span></span>
+    <span class="comment">//returns a response consisting only of the value</span></span>
+</p><p>
+    Delete a value:
+    <span class="code">https://storethat.online/del/<span class="var">{key}</span></span>
+    <span class="comment">//deletes the value from the store</span></span>
+</p>
+
+<h2>Examples</h2>
+
+<p>
+    Using a key that has a space in (e.g. from browser address bar): </p><p><span class="code">https://storethat.online/set/my name/Chloe</span>
+</p><p>
+    Storing text with spaces and punctuation (e.g. from browser address bar): </p><p><span class="code">https://storethat.online/set/fullname/Chloe "C-lo" Smith</span>
+</p><p>
+    Retrieving a value using jQuery:</p><p>
+<span class="code">
+$.get("https://storethat.online/get/my name", function(value, status){<span class="comment">//... do something with 'value'</span>});
+</span>
+</p><p>
+    Using a hard-to-guess key: </p><p><span class="code">https://storethat.online/set/HARD_TO_GUESS_STRING_myvar/36.2</span>
+</p>
+
+
+<h2>FAQ</h2>
+
+<div class="faq">What is the point of this?</div>
+<div class="faa">It's the simplest possible approach to online storage; a key/value store that can use used entirely with simple HTTP GET requests.
+    This work was inspired by working on small non-profit web sites where the time and skills required to set up something like Firebase aren't available, and requirements are typically simple.</div>
+
+<div class="faq">What are some use cases?</div>
+<div class="faa">Here are some possibilities:
+    <ul>
+        <li>
+            Tiny use cases like hit counters -- you can implement a hit counter with storethat.online entirely from within your HTML page.
+        </li>
+        <li>
+            Really small web projects where there is likely to be nobody available to support or develop with a 'proper' lightweight storage solution.
+        </li>
+        <li>
+            Testing and deployment scripts that may need to store config values where they can easily be accessed without much coding.
+        </li>
+    </ul>
+</div>
+
+<div class="faq">Is it secure?</div>
+
+<div class="faa">Surprisingly, yes -- when used over https, of course.  When you use an API key to access some REST API, all you're doing is inserting a hard-to guess string
+    into your request and relying on https to conceal that string from prying eyes.  That's also exactly what you're doing if you use storethat.online with some hard-to-guess string in
+    the key name.  You may conclude from this that storethat.online is surprisingly secure, or that many widespread REST apis are surprisingly insecure.
+</div>
+
+<div class="faq">Is it scalable?</div>
+
+<div class="faa">It's exactly as scalable as the mechanism used to handle the HTTP request and get/set a value in the underlying storage.  In the case of this implementation, that's not particularly as not much traffic is anticipated.
+    But this interface paradigm -- i.e. ultra-simple https get and set requests -- can be fitted over any underlying mechanism in theory.
+</div>
+
+<div class="faq">How do I make an account?</div>
+
+<div class="faa">There are no accounts.  There's only an http request.  Were it not so it would not be so minimal.
+</div>
+
+<h2>Credits and notes</h2>
+
+<p>
+    storethat.online is by Ben Peterson of <a href="http://datasmith.org">DataSmith</a>.  The back end is on <a href="https://www.netlify.com/">Netlify</a>.
+</p>
+<p>
+
+</p>
+
+</body>
+</html>

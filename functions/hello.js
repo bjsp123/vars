@@ -2,6 +2,7 @@
 const faunadb = require('faunadb')
 const q = faunadb.query
 
+
 exports.handler = async event => {
 
     let s = event.path.replace(/^\/+/, '');
@@ -12,27 +13,20 @@ exports.handler = async event => {
     let varname = "unknown_var";
     let value = "unknown_value";
 
-    if (tokens.length == 0) {
-        return {
-            body: 'Welcome to the world\'s most minimal serverless storage!<\/br>Try /set/varname, /get/varname/, or /del/varname and enjoy!',
-            statusCode: 200
-        }
-    }
-    if (tokens.length == 1) {
-        op = "get";
-        varname = tokens[0];
-    } else if (tokens[0] == "set") {
+    if (tokens[0] == "set" && tokens.length > 2) {
         op = "set";
         varname = tokens[1];
         tokens.shift();
         tokens.shift();
         value = tokens.join("/");  //the point of this is to reassemble values that had slashes in.
-    } else if (tokens[0] == "del") {
+    } else if (tokens[0] == "del" && tokens.length > 1) {
         op = "del";
         varname = tokens[1];
-    } else if (tokens[0] == "get") {
+    } else if (tokens[0] == "get" && tokens.length > 1) {
         op = "get";
         varname = tokens[1];
+    } else {
+            return buildHelpPage();
     }
 
     value = decodeURIComponent(value);
@@ -40,12 +34,9 @@ exports.handler = async event => {
 
     console.log('info', "Doing " + op + " " + varname + " " + value);
 
-    // visitors fnAEA6eDIiACATItAAdaba7rKq7kOmeCxu0M7AOg
-    // vars fnAEBLDVCEACAa5Db3UUIu5EVFRu6dliySa2YKCn
-
     var q = faunadb.query
     var client = new faunadb.Client({
-        secret: 'fnAEBLDVCEACAa5Db3UUIu5EVFRu6dliySa2YKCn', // please do not use this to mess up our fauna database kind people
+        secret: 'fnAEBLDVCEACAa5Db3UUIu5EVFRu6dliySa2YKCn',
         domain: 'db.fauna.com',
         scheme: 'https',
     })
@@ -57,7 +48,7 @@ exports.handler = async event => {
     } else if (op=="del") {
         return delvar(q, client, varname);
     } else {
-        return buildError ({message:"No instruction given.  Usage: /get/varname, /set/varname, /del/varname."},'');
+        return buildError ({message:"pNo instruction given.  Usage: /get/varname, /set/varname, /del/varname."},'');
     }
 }
 
@@ -133,5 +124,16 @@ function buildError(err, varname){
     return {
         statusCode: 400,
         body: msg
+    }
+}
+
+function buildHelpPage(){
+
+    var helpString="<html>\n<head>\n    <style>\n        body {\n            background-color: black;\n            color:#d3d3d3;\n            font-family: \"Lucida Sans Typewriter\", \"Lucida Typewriter\",\"Courier New\", Courier, monospace;\n            margin-left: 15%;\n            margin-right: 15%;\n        }\n\n        h1 {\n            text-align:center;\n            margin-top: 100px;\n            font-weight: bold;\n            font-size: larger;\n        }\n\n        h2 {\n            margin-top: 50px;\n            font-weight: bold;\n            font-size: large;\n        }\n\n        .separator {\n            text-align:center;\n            margin-top: 50px;\n            margin-bottom: 50px;\n        }\n\n        .code {\n            color: lightgreen;\n        }\n\n        .var {\n            color: lightyellow;\n        }\n\n        .comment {\n            color: gray;\n            font-style: italic;\n        }\n\n        .faq {\n            font-style: italic;\n            color:lightyellow;\n            margin-bottom: 25px;\n        }\n\n        .faa {\n\n            margin-bottom: 25px;\n        }\n\n    </style>\n</head>\n<body>\n\n<h1>Welcome to Storethat.online </h1>\n\n<div class=\"separator\">Ultra-lightweight no-code data storage.<br/>------------------------------------<br/></div>\nstorethat.online is a key-value store that can be used with no tools, preparation or coding except a simple HTTP request -- in fact it could be used\nentirely from the address bar of a browser.\n<h2>Usage</h2>\n\n<p>\n    Store a value:\n    <span class=\"code\">https://storethat.online/set/<span class=\"var\">{key}</span>/<span class=\"var\">{value}</span>\n        <span class=\"comment\">//sets a value in the store, and returns a confirmation message</span></span>\n</p><p>\nRetrieve a value:\n    <span class=\"code\">https://storethat.online/get/<span class=\"var\">{key}</span></span>\n    <span class=\"comment\">//returns a response consisting only of the value</span></span>\n</p><p>\nDelete a value:\n    <span class=\"code\">https://storethat.online/del/<span class=\"var\">{key}</span></span>\n    <span class=\"comment\">//deletes the value from the store</span></span>\n</p>\n\n<h2>Examples</h2>\n\n<p>\nUsing a key that has a space in (e.g. from browser address bar): </p><p><span class=\"code\">https://storethat.online/set/my name/Chloe</span>\n</p><p>\n    Storing text with spaces and punctuation (e.g. from browser address bar): </p><p><span class=\"code\">https://storethat.online/set/fullname/Chloe \"C-lo\" Smith</span>\n</p><p>\n    Retrieving a value using jQuery:</p><p>\n<span class=\"code\">\n$.get(\"https://storethat.online/get/my name\", function(value, status){<span class=\"comment\">//... do something with 'value'</span>});\n</span>\n</p><p>\n    Using a hard-to-guess key: </p><p><span class=\"code\">https://storethat.online/set/HARD_TO_GUESS_STRING_myvar/36.2</span>\n</p>\n\n\n<h2>FAQ</h2>\n\n<div class=\"faq\">What is the point of this?</div>\n<div class=\"faa\">It's the simplest possible approach to online storage; a key/value store that can use used entirely with simple HTTP GET requests.\n    This work was inspired by working on small non-profit web sites where the time and skills required to set up something like Firebase aren't available, and requirements are typically simple.</div>\n\n<div class=\"faq\">What are some use cases?</div>\n<div class=\"faa\">Here are some possibilities:\n    <ul>\n        <li>\n            Tiny use cases like hit counters -- you can implement a hit counter with storethat.online entirely from within your HTML page.\n        </li>\n        <li>\n            Really small web projects where there is likely to be nobody available to support or develop with a 'proper' lightweight storage solution.\n        </li>\n        <li>\n            Testing and deployment scripts that may need to store config values where they can easily be accessed without much coding.\n        </li>\n    </ul>\n</div>\n\n<div class=\"faq\">Is it secure?</div>\n\n<div class=\"faa\">Surprisingly, yes -- when used over https, of course.  When you use an API key to access some REST API, all you're doing is inserting a hard-to guess string\n    into your request and relying on https to conceal that string from prying eyes.  That's also exactly what you're doing if you use storethat.online with some hard-to-guess string in\n    the key name.  You may conclude from this that storethat.online is surprisingly secure, or that many widespread REST apis are surprisingly insecure.\n</div>\n\n<div class=\"faq\">Is it scalable?</div>\n\n<div class=\"faa\">It's exactly as scalable as the mechanism used to handle the HTTP request and get/set a value in the underlying storage.  In the case of this implementation, that's not particularly as not much traffic is anticipated.\n    But this interface paradigm -- i.e. ultra-simple https get and set requests -- can be fitted over any underlying mechanism in theory.\n</div>\n\n<div class=\"faq\">How do I make an account?</div>\n\n<div class=\"faa\">There are no accounts.  There's only an http request.  Were it not so it would not be so minimal.\n</div>\n\n<h2>Credits and notes</h2>\n\n<p>\n    storethat.online is by Ben Peterson of <a href=\"http://datasmith.org\">DataSmith</a>.  The back end is on <a href=\"https://www.netlify.com/\">Netlify</a>.\n</p>\n<p>\n\n</p>\n\n</body>\n</html>\n";
+
+
+    return {
+        body: helpString,
+            statusCode: 200
     }
 }

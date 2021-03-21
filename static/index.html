@@ -44,8 +44,10 @@
 
         .faq {
             font-style: italic;
-            color:lightyellow;
+            color:white;
             margin-bottom: 25px;
+            font-size: 15pt;
+            margin-top: 40px;
         }
 
         .faa {
@@ -97,8 +99,12 @@ $.get("https://storethat.online/get/my name", function(value, status){<span clas
 <h2>FAQ</h2>
 
 <div class="faq">What is the point of this?</div>
-<div class="faa">It's the simplest possible approach to online storage; a key/value store that can use used entirely with simple HTTP GET requests.
-    This work was inspired by working on small non-profit web sites where the time and skills required to set up something like Firebase aren't available, and requirements are typically simple.</div>
+<div class="faa">
+    This work was inspired by working on small non-profit web sites where the time and skills required to set up something like Firebase aren't available,
+    and requirements are typically simple.<p/>
+    You can set and view values in storethat.online using only the address bar of a browser, and you can access them within a page using only a line of jQuery. </div>
+    <p/>
+    It's the simplest possible approach to online storage; a key/value store that can use used entirely with simple HTTP GET requests.
 
 <div class="faq">What are some use cases?</div>
 <div class="faa">Here are some possibilities:
@@ -117,9 +123,9 @@ $.get("https://storethat.online/get/my name", function(value, status){<span clas
 
 <div class="faq">Is it secure?</div>
 
-<div class="faa">Surprisingly, <i>yes</i> -- when used over https, of course.  When you use an API key to access some REST API, all you're doing is inserting a hard-to guess string
-    into your request and relying on https to conceal that string from prying eyes.  That's also exactly what you're doing if you use storethat.online with some hard-to-guess string in
-    the key name.  You may conclude from this that storethat.online is surprisingly secure, or that many widespread REST apis are surprisingly insecure.
+<div class="faa">Surprisingly, <i>yes</i> -- when used over HTTPS, of course.  When you use an API key to access a REST API, all you're doing is inserting a hard-to guess string
+    into your request and relying on HTTPS to conceal that string from prying eyes.  That's also exactly what you're doing if you use storethat.online with some hard-to-guess string in
+    the key name.  You may conclude from this that storethat.online is surprisingly secure, or that many widespread REST APIs are surprisingly insecure.
 </div>
 
 <div class="faq">Is it scalable?</div>

@@ -4,22 +4,23 @@
         body {
             background-color: black;
             color:lightgray;
-            font-family: "Lucida Sans Typewriter", "Lucida Typewriter","Courier New", Courier, monospace;
+            font-family: "Courier New", Courier, monospace;
             margin-left: 15%;
             margin-right: 15%;
+            font-size: 15pt;
         }
 
         h1 {
             text-align:center;
             margin-top: 100px;
             font-weight: bold;
-            font-size: larger;
+            font-size: 19pt;
         }
 
         h2 {
             margin-top: 50px;
             font-weight: bold;
-            font-size: large;
+            font-size: 17pt;
         }
 
         .separator {
@@ -116,29 +117,31 @@ $.get("https://storethat.online/get/my name", function(value, status){<span clas
 
 <div class="faq">Is it secure?</div>
 
-<div class="faa">Surprisingly, yes -- when used over https, of course.  When you use an API key to access some REST API, all you're doing is inserting a hard-to guess string
+<div class="faa">Surprisingly, <i>yes</i> -- when used over https, of course.  When you use an API key to access some REST API, all you're doing is inserting a hard-to guess string
     into your request and relying on https to conceal that string from prying eyes.  That's also exactly what you're doing if you use storethat.online with some hard-to-guess string in
     the key name.  You may conclude from this that storethat.online is surprisingly secure, or that many widespread REST apis are surprisingly insecure.
 </div>
 
 <div class="faq">Is it scalable?</div>
 
-<div class="faa">It's exactly as scalable as the mechanism used to handle the HTTP request and get/set a value in the underlying storage.  In the case of this implementation, that's not particularly as not much traffic is anticipated.
-    But this interface paradigm -- i.e. ultra-simple https get and set requests -- can be fitted over any underlying mechanism in theory.
+<div class="faa">It's exactly as scalable as the mechanism used to handle the HTTP request and get/set a value in the underlying storage.  In the case of this implementation, the underlying storage is scalable but not particularly fast.
+    But the storethat.online interface paradigm -- i.e. ultra-simple https get and set requests -- could be fitted over any underlying mechanism.
 </div>
 
 <div class="faq">How do I make an account?</div>
 
-<div class="faa">There are no accounts.  There's only an http request.  Were it not so it would not be so minimal.
+<div class="faa">There are no accounts.  Were it not so it would not be so minimal.
 </div>
 
 <h2>Credits and notes</h2>
 
 <p>
-    storethat.online is by Ben Peterson of <a href="http://datasmith.org">DataSmith</a>.  The back end is on <a href="https://www.netlify.com/">Netlify</a>.
+    storethat.online is by <a href="https://www.linkedin.com/in/bjspeterson/">Ben Peterson</a> of <a href="http://datasmith.org">DataSmith</a>.  The back end is on <a href="https://www.netlify.com/">Netlify</a>.
 </p>
 <p>
-
+    As well as being useful for tiny projects, storethat.online is an experiment in how minimalistic and simple online storage can possibly be.
+    It's hard to see how to extend storethat.online without losing the point of the project...
+    but could it somehow be made <i>more</i> minimalistic?
 </p>
 
 </body>

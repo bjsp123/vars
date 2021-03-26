@@ -118,6 +118,8 @@ function buildError(err, varname){
         msg="There is no variable called '" + varname + "'."
     }
 
+    msg = "Error: " + msg;
+
     console.log("error", msg);
     console.log(JSON.stringify(err));
 
@@ -133,6 +135,6 @@ function buildHelpPage(){
     
     return {
         body: helpString,
-            statusCode: 200
+            statusCode: 400
     }
 }

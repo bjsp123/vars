@@ -73,11 +73,11 @@ entirely from the address bar of a browser.
 </p><p>
     Retrieve a value:
     <span class="code">https://storethat.online/get/<span class="var">{key}</span></span>
-    <span class="comment">//returns a response consisting only of the value</span></span>
+    <span class="comment">//returns a response consisting only of the value.  Returns status code 400 if value not found.</span></span>
 </p><p>
     Delete a value:
     <span class="code">https://storethat.online/del/<span class="var">{key}</span></span>
-    <span class="comment">//deletes the value from the store</span></span>
+    <span class="comment">//deletes the value from the store.  Returns status code 400 if value not found.</span></span>
 </p>
 
 <h2>Examples</h2>
@@ -125,7 +125,7 @@ $.get("https://storethat.online/get/my name", function(value, status){<span clas
 
 <div class="faa">Surprisingly, <i>yes</i> -- when used over HTTPS, of course.  When you use an API key to access a REST API, all you're doing is inserting a hard-to guess string
     into your request and relying on HTTPS to conceal that string from prying eyes.  That's also exactly what you're doing if you use storethat.online with some hard-to-guess string in
-    the key name.  You may conclude from this that storethat.online is surprisingly secure, or that many widespread REST APIs are surprisingly insecure.
+    the key name.  Of course, well-run REST APIs may have a mechanism for key expiry, which storethat.online lacks.
 </div>
 
 <div class="faq">Is it scalable?</div>
@@ -137,6 +137,13 @@ $.get("https://storethat.online/get/my name", function(value, status){<span clas
 <div class="faq">How do I make an account?</div>
 
 <div class="faa">There are no accounts.  There is only a simple HTTP request.
+</div>
+
+
+<div class="faq">Why don't you use HTTP request types like POST and PUT?</div>
+
+<div class="faa">Because the aim is to be minimal -- to be usable in a single line from anything that can manage http in any way, with absolutely no technical knowledge of HTTP required.  By far the best way
+    to do that is to put the 'verb' in the URL.
 </div>
 
 <h2>Credits and notes</h2>
